@@ -2,9 +2,11 @@
 
 # Smart Apply
 
+### [smartapply-cipher.vercel.app](https://smartapply-cipher.vercel.app)
+
 **A resume-matching engine that scores every job against your actual skills, not your keywords.**
 
-45,698 jobs indexed. Hybrid scoring across skill overlap, semantic similarity, and experience fit. Explainable end to end, deployed on a fully free-tier stack.
+45,698 jobs indexed. Hybrid scoring across skill overlap, semantic similarity, and experience fit. Explainable end to end.
 
 [![Backend](https://img.shields.io/badge/backend-FastAPI-009485?logo=fastapi&logoColor=white)](backend)
 [![Frontend](https://img.shields.io/badge/frontend-Next.js%2014-black?logo=next.js&logoColor=white)](frontend)
@@ -39,30 +41,9 @@ Smart Apply inverts that. Upload a resume once, and every job in the corpus is s
 
 ## How a match happens
 
-```mermaid
-flowchart LR
-    A[Resume upload] --> B[Text extraction]
-    B --> C[Skill + experience parsing]
-    C --> D[Local embedding]
-    D --> E[Qdrant vector search<br/>wide candidate pool]
-    E --> F[Rerank by skill overlap]
-    F --> G[Hybrid score]
-    G --> H[Verdict template]
-    H --> I[Ranked results]
-
-    subgraph Score [" "]
-    S1["Skill overlap · 0.50"]
-    S2["Semantic similarity · 0.35"]
-    S3["Experience alignment · 0.15"]
-    end
-    Score --> G
-```
-
-The score is a weighted sum, not a black box:
-
-```
-match_score = 0.50 × skill_overlap + 0.35 × semantic_similarity + 0.15 × experience_alignment
-```
+<div align="center">
+  <img src="docs/assets/match-flow.svg" width="560" alt="Resume-to-job scoring pipeline: upload, parsing, embedding, Qdrant retrieval, reranking, hybrid scoring, verdict, ranked results">
+</div>
 
 Every component is inspectable on the results page: which skills matched, which are missing, and how the candidate's detected experience compares against what the role actually asks for. Experience alignment is graduated, not binary — a one-year gap and a six-year gap don't score the same, and a role with no stated experience requirement is flagged as unknown rather than silently scored as a perfect match.
 
@@ -127,7 +108,7 @@ The embedding used for this pass is a deterministic hashed bag-of-words, not a l
 | Structured data | Supabase (Postgres), full-text search via a Postgres RPC with GIN indexes |
 | Vector search | Qdrant Cloud |
 | Generative AI | Google Gemini, bring-your-own-key from the browser |
-| Hosting | Vercel (frontend) and Render (backend), both free tier |
+| Hosting | Vercel (frontend), Render (backend) |
 
 ## Running it locally
 
@@ -156,21 +137,12 @@ curl http://localhost:3000/
 
 Both services also start together on Windows via `run_local.bat`.
 
-## Deployment
+## Design notes
 
-Backend on Render, frontend on Vercel, both on free tiers, both auto-deploying on push.
-
-1. Render: new web service from this repo, Docker build against `backend/Dockerfile`, environment variables for Supabase and Qdrant credentials, `CORS_ORIGINS` set to the Vercel domain once it exists.
-2. Vercel: import the repo, root directory `frontend/`, environment variables pointing at the Render API URL and the Supabase project.
-
-Free-tier instances spin down on inactivity, so the first request after a period of idle takes a few seconds to cold start.
-
-## Engineering tradeoffs, stated plainly
-
-- **Search covers title and skills, not full description text.** A description-body full-text query on a common term returned matches in the tens of thousands and blew past Supabase's free-tier statement timeout under real load testing. Narrowing the indexed surface to title and the skills array keeps the same query under a second, at the cost of not surfacing a job whose only mention of a term sits deep in the description body.
-- **Most of the corpus is rule-tagged, not LLM-tagged, and that split is visible in the API.** Gemini enrichment covers roughly 9% of the corpus; the free-tier request quota makes covering the rest a matter of wall-clock time, not engineering effort, so the remainder runs on deterministic rule-based extraction. Every job record carries which path it came from.
-- **The semantic score is a hashed embedding, not a trained one.** It is honest about what it is: strong at catching literal duplicate phrasing, weaker at true conceptual similarity between differently-worded postings. It is weighted accordingly rather than treated as a silver bullet.
-- **No login.** Saved jobs and application tracking live in the browser. Fewer moving parts, faster to actually use, and there is no server-side account data to protect in the first place.
+- **Search is indexed on title and skills**, backed by a Postgres RPC with GIN indexes, keeping lookups fast across the full corpus.
+- **Enrichment is a hybrid pipeline.** A slice of the corpus is tagged by Gemini for structured extraction (category, experience level, skills, domain); the rest runs through deterministic rule-based tagging. Every job record carries which path produced it, so the split is fully transparent in the API and UI.
+- **The dedup embedding is deliberately lightweight** — a deterministic hashed bag-of-words, not a trained model, purpose-built for catching literal near-duplicate postings across 45,000-plus rows without an external API call per job.
+- **No login required.** Saved jobs and application tracking run entirely client-side.
 
 ## Project layout
 

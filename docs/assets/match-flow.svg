@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="900" viewBox="0 0 720 900" font-family="'Cascadia Code','Consolas',monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3ecf9e"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="720" height="900" rx="14" fill="#0a0f14"/>
+  <rect x="1" y="1" width="718" height="898" rx="13" fill="none" stroke="#152028" stroke-width="1"/>
+
+  <circle cx="34" cy="34" r="10" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.4"/>
+  <path d="M30 34 a4 4 0 1 1 8 0 a4 4 0 1 1 -8 0 M36.8 36.8 L40 40" stroke="#3ecf9e" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+  <text x="54" y="40" fill="#e8f4ef" font-size="17" font-weight="600">How a match happens</text>
+  <line x1="30" y1="58" x2="690" y2="58" stroke="#152028" stroke-width="1"/>
+
+  <circle cx="34" cy="80" r="4" fill="#3ecf9e"/>
+  <text x="48" y="85" fill="#e8f4ef" font-size="14" font-weight="600">Resume-to-job scoring pipeline</text>
+  <text x="30" y="104" fill="#5a7d75" font-size="11.5">One resume in, every job in the corpus scored and ranked</text>
+
+  <!-- node template values -->
+  <!-- Step 1 -->
+  <rect x="235" y="130" width="250" height="52" rx="8" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.3"/>
+  <text x="360" y="152" fill="#a9e8d4" font-size="12.5" font-weight="600" text-anchor="middle">Resume upload</text>
+  <text x="360" y="169" fill="#5a7d75" font-size="10.5" text-anchor="middle">PDF text extraction</text>
+
+  <line x1="360" y1="182" x2="360" y2="208" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Step 2 -->
+  <rect x="235" y="210" width="250" height="52" rx="8" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.3"/>
+  <text x="360" y="232" fill="#a9e8d4" font-size="12.5" font-weight="600" text-anchor="middle">Skill + experience parsing</text>
+  <text x="360" y="249" fill="#5a7d75" font-size="10.5" text-anchor="middle">skills, years, role signals extracted</text>
+
+  <line x1="360" y1="262" x2="360" y2="288" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Step 3 -->
+  <rect x="235" y="290" width="250" height="52" rx="8" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.3"/>
+  <text x="360" y="312" fill="#a9e8d4" font-size="12.5" font-weight="600" text-anchor="middle">Local embedding</text>
+  <text x="360" y="329" fill="#5a7d75" font-size="10.5" text-anchor="middle">384-dim vector representation</text>
+
+  <line x1="360" y1="342" x2="360" y2="368" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Step 4 -->
+  <rect x="210" y="370" width="300" height="52" rx="8" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.3"/>
+  <text x="360" y="392" fill="#a9e8d4" font-size="12.5" font-weight="600" text-anchor="middle">Qdrant vector search</text>
+  <text x="360" y="409" fill="#5a7d75" font-size="10.5" text-anchor="middle">wide candidate pool retrieved from 45,698 jobs</text>
+
+  <line x1="360" y1="422" x2="360" y2="448" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Step 5 -->
+  <rect x="235" y="450" width="250" height="52" rx="8" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.3"/>
+  <text x="360" y="472" fill="#a9e8d4" font-size="12.5" font-weight="600" text-anchor="middle">Rerank by skill overlap</text>
+  <text x="360" y="489" fill="#5a7d75" font-size="10.5" text-anchor="middle">candidates reordered on real skill match</text>
+
+  <line x1="360" y1="502" x2="360" y2="528" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Score box: three inputs merging -->
+  <rect x="80" y="530" width="560" height="112" rx="10" fill="#0d1a1f" stroke="#2a4a44" stroke-width="1.2" stroke-dasharray="3 4"/>
+  <text x="360" y="551" fill="#5a7d75" font-size="10.5" text-anchor="middle" letter-spacing="1">HYBRID SCORE</text>
+
+  <rect x="100" y="562" width="160" height="60" rx="7" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.1"/>
+  <text x="180" y="586" fill="#e8f4ef" font-size="11.5" font-weight="600" text-anchor="middle">Skill overlap</text>
+  <text x="180" y="605" fill="#3ecf9e" font-size="14" font-weight="700" text-anchor="middle">0.50</text>
+
+  <rect x="280" y="562" width="160" height="60" rx="7" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.1"/>
+  <text x="360" y="586" fill="#e8f4ef" font-size="11.5" font-weight="600" text-anchor="middle">Semantic similarity</text>
+  <text x="360" y="605" fill="#3ecf9e" font-size="14" font-weight="700" text-anchor="middle">0.35</text>
+
+  <rect x="460" y="562" width="160" height="60" rx="7" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.1"/>
+  <text x="540" y="586" fill="#e8f4ef" font-size="11.5" font-weight="600" text-anchor="middle">Experience alignment</text>
+  <text x="540" y="605" fill="#3ecf9e" font-size="14" font-weight="700" text-anchor="middle">0.15</text>
+
+  <line x1="360" y1="642" x2="360" y2="668" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Step: verdict -->
+  <rect x="235" y="670" width="250" height="52" rx="8" fill="#0f1b22" stroke="#3ecf9e" stroke-width="1.3"/>
+  <text x="360" y="692" fill="#a9e8d4" font-size="12.5" font-weight="600" text-anchor="middle">Verdict template</text>
+  <text x="360" y="709" fill="#5a7d75" font-size="10.5" text-anchor="middle">deterministic, built from matched/missing skills</text>
+
+  <line x1="360" y1="722" x2="360" y2="748" stroke="#3ecf9e" stroke-width="1.3" stroke-dasharray="4 4" marker-end="url(#arrow)"/>
+
+  <!-- Final -->
+  <rect x="235" y="750" width="250" height="52" rx="8" fill="#123027" stroke="#3ecf9e" stroke-width="1.6"/>
+  <text x="360" y="772" fill="#dffcf0" font-size="12.5" font-weight="700" text-anchor="middle">Ranked, explained results</text>
+  <text x="360" y="789" fill="#7fd9b8" font-size="10.5" text-anchor="middle">every score traceable end to end</text>
+
+  <text x="360" y="850" fill="#3a5750" font-size="10.5" text-anchor="middle">Skill overlap · Semantic similarity · Experience alignment</text>
+  <text x="360" y="870" fill="#3a5750" font-size="10.5" text-anchor="middle">Fully deterministic ranking — no black box, no free-form generation in the score path</text>
+</svg>
