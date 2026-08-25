@@ -1,0 +1,16 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+gunicorn==23.0.0
+pydantic==2.13.4
+pydantic-settings==2.7.1
+google-generativeai==0.8.3
+supabase==2.31.0
+qdrant-client==1.12.1
+pdfplumber==0.11.4
+pandas==2.2.3
+cachetools==5.5.0
+tenacity==9.0.0
+python-dateutil==2.9.0.post0
+python-multipart==0.0.20
+ijson==3.3.0
+python-dotenv==1.0.1

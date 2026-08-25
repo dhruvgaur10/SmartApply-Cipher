@@ -1,0 +1,239 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Flat panel surface, matching the mockup's .panel exactly: a plain
+     background color, no border, no radius, no shadow. Panels read as
+     distinct regions purely through background contrast and spacing.
+     card-flat also cancels the base shadcn Card's rounded corners and
+     ring, since it is applied as an extra class on top of <Card>. */
+  .card-flat,
+  .panel-flat {
+    @apply rounded-none;
+    background: var(--panel);
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+  }
+  .card-glass-dark {
+    @apply rounded-lg border border-white/10 bg-white/[0.04];
+  }
+  .badge-float {
+    @apply inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium shadow-lg;
+    animation: badge-drift 6s ease-in-out infinite;
+  }
+  .badge-float-dark {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-medium text-white shadow-lg;
+    animation: badge-drift 6s ease-in-out infinite;
+  }
+  .pulse-dot {
+    @apply relative inline-flex h-1.5 w-1.5 rounded-full;
+    background: var(--gold);
+  }
+  .pulse-dot::after {
+    content: "";
+    @apply absolute inset-0 rounded-full;
+    background: var(--gold);
+    animation: pulse-ring 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  .tone-neutral {
+    background: var(--muted);
+    color: var(--inksoft);
+  }
+  .tone-accent {
+    background: var(--gold-soft);
+    color: var(--gold);
+  }
+  .tone-good {
+    background: var(--good-soft);
+    color: var(--good);
+  }
+  .tone-warn {
+    background: var(--warn-soft);
+    color: var(--warn);
+  }
+  .tone-bad {
+    background: var(--bad-soft);
+    color: var(--bad);
+  }
+  /* Hero panel: flat dark surface, one quiet corner glow - matches
+     Main.dc.html's .hero exactly, replacing the old bright animated mesh
+     which would clash badly now the whole app is already dark. */
+  .gradient-mesh {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--panel), oklch(0.12 0.01 250));
+    color: var(--ink);
+  }
+  .gradient-mesh::before {
+    content: "";
+    position: absolute;
+    top: -160px;
+    right: -140px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gold-soft), transparent 68%);
+    filter: blur(18px);
+    pointer-events: none;
+  }
+  .gradient-mesh > * {
+    position: relative;
+  }
+  .gradient-mesh .text-foreground,
+  .gradient-mesh h1 {
+    color: var(--ink);
+  }
+  .text-gradient {
+    color: var(--gold);
+  }
+}
+
+@keyframes badge-drift {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes drift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-33.3333%); }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 22s linear infinite;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+@layer base {
+  .theme {
+    --font-heading: var(--font-display);
+    --font-sans: var(--font-sans);
+  }
+  :root {
+    /* Direction C theme: dark, warm-neutral, gold accent, serif display.
+       Values match the approved mockup (Main.dc.html / App.dc.html) exactly -
+       oklch(0.075 0.003 60) page, oklch(0.135 0.006 55) panel, gold accent
+       at oklch(0.8 0.08 62), Cormorant Garamond display type. */
+    --page: oklch(0.075 0.003 60);
+    --panel: oklch(0.135 0.006 55);
+    --panel2: oklch(0.175 0.007 55);
+    --ink: oklch(0.97 0.004 60);
+    --inksoft: oklch(0.74 0.008 60);
+    --inkdim: oklch(0.6 0.008 60);
+    --line: oklch(1 0 0 / 0.1);
+    --gold: oklch(0.8 0.08 62);
+    --gold-dim: oklch(0.62 0.06 60);
+    --gold-soft: oklch(0.28 0.05 62);
+    --good: oklch(0.76 0.12 152);
+    --good-soft: oklch(0.28 0.06 152);
+    --warn: oklch(0.8 0.11 70);
+    --warn-soft: oklch(0.3 0.06 70);
+    --bad: oklch(0.68 0.15 25);
+    --bad-soft: oklch(0.28 0.08 25);
+
+    --background: var(--page);
+    --foreground: var(--ink);
+    --card: var(--panel);
+    --card-foreground: var(--ink);
+    --popover: var(--panel);
+    --popover-foreground: var(--ink);
+    --primary: var(--gold);
+    --primary-foreground: oklch(0.13 0.006 60);
+    --secondary: var(--gold-soft);
+    --secondary-foreground: var(--gold);
+    --muted: var(--panel2);
+    --muted-foreground: var(--inksoft);
+    --accent: var(--gold-soft);
+    --accent-foreground: var(--gold);
+    --destructive: var(--bad);
+    --border: var(--line);
+    --input: var(--line);
+    --ring: var(--gold);
+    --chart-1: var(--gold);
+    --chart-2: var(--good);
+    --chart-3: var(--warn);
+    --chart-4: var(--gold-dim);
+    --chart-5: var(--inksoft);
+    --radius: 0.5rem;
+    --sidebar: var(--panel);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--gold);
+    --sidebar-primary-foreground: oklch(0.13 0.006 60);
+    --sidebar-accent: var(--gold-soft);
+    --sidebar-accent-foreground: var(--gold);
+    --sidebar-border: var(--line);
+    --sidebar-ring: var(--gold);
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-normal font-light;
+  }
+  a {
+    color: var(--gold);
+  }
+  a:hover {
+    color: var(--ink);
+  }
+}

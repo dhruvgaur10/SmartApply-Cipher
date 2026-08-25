@@ -1,0 +1,17 @@
+backend/venv/
+backend/data/raw_jobs.json
+backend/.env
+backend/*.log
+frontend/*.log
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+frontend_log.txt
+*.pyc
+__pycache__/
+.DS_Store
+README.md
+build.md
+project_spec.md
+MAIN OBJECTIVE FILE.pdf
+test_resume_good.pdf
