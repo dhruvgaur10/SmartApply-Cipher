@@ -92,6 +92,8 @@ export { isGuest };
 export async function signOutEverywhere() {
   if (typeof window !== "undefined") {
     localStorage.removeItem(GUEST_KEY);
+    sessionStorage.removeItem("resume_results");
+    sessionStorage.removeItem("gemini_api_key");
   }
   await supabase.auth.signOut();
 }

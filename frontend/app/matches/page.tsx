@@ -272,6 +272,13 @@ export default function HomePage() {
     }
   }
 
+  function handleClearResume() {
+    sessionStorage.removeItem("resume_results");
+    setResults(null);
+    setFile(null);
+    setRoadmap(null);
+  }
+
   async function handleRoadmap() {
     if (!results) return;
     const apiKey = getApiKey();
@@ -570,22 +577,31 @@ export default function HomePage() {
       )}
 
       <div>
-        {/* Two-tone heading, matching the mockup's section titles ("The
-            approach", "What happens before you apply") - white lead, gold
-            emphasis on the phrase that carries the meaning. */}
-        <h1 className="text-2xl font-display font-light">
-          {results.top_matches.length > 0 ? (
-            <>
-              {results.top_matches.length} job
-              {results.top_matches.length === 1 ? "" : "s"}{" "}
-              <span className="text-primary">actually worth your time</span>
-            </>
-          ) : (
-            <>
-              No <span className="text-primary">strong matches</span> yet
-            </>
-          )}
-        </h1>
+        <div className="flex items-start justify-between gap-3">
+          {/* Two-tone heading, matching the mockup's section titles ("The
+              approach", "What happens before you apply") - white lead, gold
+              emphasis on the phrase that carries the meaning. */}
+          <h1 className="text-2xl font-display font-light">
+            {results.top_matches.length > 0 ? (
+              <>
+                {results.top_matches.length} job
+                {results.top_matches.length === 1 ? "" : "s"}{" "}
+                <span className="text-primary">actually worth your time</span>
+              </>
+            ) : (
+              <>
+                No <span className="text-primary">strong matches</span> yet
+              </>
+            )}
+          </h1>
+          <button
+            type="button"
+            onClick={handleClearResume}
+            className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2 shrink-0 mt-2"
+          >
+            Upload a different resume
+          </button>
+        </div>
         <p className="text-muted-foreground mt-1">
           Ranked by skill overlap, semantic fit, and experience alignment &mdash; based on{" "}
           {results.resume_skills.length} skills detected in your resume, not keyword guessing.
