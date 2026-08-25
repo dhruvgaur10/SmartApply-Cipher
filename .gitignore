@@ -10,7 +10,6 @@ frontend_log.txt
 *.pyc
 __pycache__/
 .DS_Store
-README.md
 build.md
 project_spec.md
 MAIN OBJECTIVE FILE.pdf
