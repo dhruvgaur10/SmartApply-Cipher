@@ -41,9 +41,7 @@ Smart Apply inverts that. Upload a resume once, and every job in the corpus is s
 
 ## How a match happens
 
-<div align="center">
-  <img src="docs/assets/match-flow.png" width="560" alt="Resume-to-job scoring pipeline: upload, parsing, embedding, Qdrant retrieval, reranking, hybrid scoring, verdict, ranked results">
-</div>
+![Resume-to-job scoring pipeline](./docs/assets/match-flow.png)
 
 Every component is inspectable on the results page: which skills matched, which are missing, and how the candidate's detected experience compares against what the role actually asks for. Experience alignment is graduated, not binary — a one-year gap and a six-year gap don't score the same, and a role with no stated experience requirement is flagged as unknown rather than silently scored as a perfect match.
 
