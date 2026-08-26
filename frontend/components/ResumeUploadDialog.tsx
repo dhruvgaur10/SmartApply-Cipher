@@ -29,7 +29,7 @@ export function ResumeUploadDialog() {
       const result = await uploadResume(file, apiKey);
       sessionStorage.setItem("resume_results", JSON.stringify(result));
       setOpen(false);
-      router.push("/resume/results");
+      router.push("/matches");
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Resume upload failed");
     } finally {
