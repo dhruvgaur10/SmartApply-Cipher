@@ -2,7 +2,7 @@
 
 # Smart Apply
 
-<sub>[smartapply-cipher.vercel.app](https://smartapply-cipher.vercel.app)</sub>
+<sub>**Website** &nbsp;·&nbsp; [smartapply-cipher.vercel.app](https://smartapply-cipher.vercel.app) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [**Demonstration Video**](https://drive.google.com/file/d/1bVxqu7zqfMzII7RsGsZejG0D29yG-fNI/view?usp=sharing)</sub>
 
 **A resume-matching engine that scores every job against your actual skills, not your keywords.**
 
